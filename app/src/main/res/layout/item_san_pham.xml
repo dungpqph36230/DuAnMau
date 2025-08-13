@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imgSanPham"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_marginRight="10dp"
+        android:background="@color/black"
+        android:padding="1dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvMaDanhMuc"
+            android:text="Tên Sản Phẩm"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvTenDanhMuc"
+            android:text="Giá: 0 VNĐ"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#FA1509"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvSoLuongTonKho"
+            android:text="Tồn kho: 0"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textColor="#8A8A8A"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgGioHang"
+            android:src="@drawable/ic_gio_hang"
+            android:layout_marginEnd="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:id="@+id/imgSuaDanhMuc"
+            android:src="@drawable/ic_menu_edit"
+            android:layout_marginEnd="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:id="@+id/imgXoaDanhMuc"
+            android:src="@drawable/ic_menu_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:tint="#CE1616" />
+
+    </LinearLayout>
+
+</LinearLayout>
