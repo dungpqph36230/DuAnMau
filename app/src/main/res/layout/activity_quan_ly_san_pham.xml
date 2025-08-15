@@ -75,14 +75,14 @@
             android:id="@+id/lvSanPham"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/fabTheDanhMuc"
+            android:layout_above="@+id/fabThemSanPham"
             android:divider="@color/black"
             android:dividerHeight="1dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fabTheDanhMuc"
+            android:id="@+id/fabThemSanPham"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"

@@ -16,6 +16,24 @@ public class TopSanPham implements Parcelable {
         this.tongSoLuong = tongSoLuong;
     }
 
+    protected TopSanPham(Parcel in) {
+        maSanPham = in.readString();
+        tenSanPham = in.readString();
+        tongSoLuong = in.readInt();
+    }
+
+    public static final Creator<TopSanPham> CREATOR = new Creator<TopSanPham>() {
+        @Override
+        public TopSanPham createFromParcel(Parcel in) {
+            return new TopSanPham(in);
+        }
+
+        @Override
+        public TopSanPham[] newArray(int size) {
+            return new TopSanPham[size];
+        }
+    };
+
     public String getMaSanPham() {
         return maSanPham;
     }
@@ -47,6 +65,8 @@ public class TopSanPham implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-
+        dest.writeString(maSanPham);
+        dest.writeString(tenSanPham);
+        dest.writeInt(tongSoLuong);
     }
 }

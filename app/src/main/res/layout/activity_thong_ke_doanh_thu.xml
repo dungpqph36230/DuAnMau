@@ -89,7 +89,7 @@
         android:textColor="@color/white"/>
 
     <TextView
-        android:id="@+id/tvDanhThu"
+        android:id="@+id/tvDoanhThus"
         android:text="Doanh Thu: 0 VNĐ"
         android:layout_alignParentStart="true"
         android:textSize="20sp"

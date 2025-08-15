@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteStatement;
 
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.model.KhackHang;
+import com.example.myapplication.model.NhanVien;
 import com.example.myapplication.model.SanPham;
 import com.example.myapplication.model.TopKhachHang;
 import com.example.myapplication.model.TopSanPham;
@@ -213,6 +215,252 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return doanhThu;
     }
 
+    public List<SanPham> latTatCaSanPham(){
+        List<SanPham> danhSachSanPham = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + BANG_SANPHAM;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            do {
+                SanPham sp = new SanPham();
+                sp.setMaSanPham(String.valueOf(cursor.getColumnIndexOrThrow(COT_MA_SP)));
+                sp.setTenSanPham(String.valueOf(cursor.getColumnIndexOrThrow(COT_TEN_SP)));
+                sp.setGiaSanPham(cursor.getInt(cursor.getColumnIndexOrThrow(COT_GIA_SP)));
+                sp.setDonViTinh(String.valueOf(cursor.getColumnIndexOrThrow(COT_DON_VI_TINH)));
+                sp.setNgayNhap(String.valueOf(cursor.getColumnIndexOrThrow(COT_NGAY_NHAP)));
+                danhSachSanPham.add(sp);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return danhSachSanPham;
+    }
+
+    public List<KhackHang> latTatCaKhachHang(){
+        List<KhackHang> danhSachKhachHang = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + BANG_KHACHHANG;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            do {
+                KhackHang kh = new KhackHang();
+                kh.setMaKhachHang(String.valueOf(cursor.getColumnIndexOrThrow(COT_MA_KHACHHANG)));
+                kh.setTenKhachHang(String.valueOf(cursor.getColumnIndexOrThrow(COT_TEN_KHACHHANG)));
+                kh.setDiaChi(String.valueOf(cursor.getColumnIndexOrThrow(COT_DIA_CHI_KH)));
+                kh.setSoDienThoai(String.valueOf(cursor.getColumnIndexOrThrow(COT_SDT)));
+                kh.setEmail(String.valueOf(cursor.getColumnIndexOrThrow(COT_EMAIL)));
+                danhSachKhachHang.add(kh);
+                }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return danhSachKhachHang;
+    }
+
+    public List<NhanVien> latTatCaNhanVien(){
+        List<NhanVien> danhSachNhanViens = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + BANG_NHANVIEN;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                NhanVien nv = new NhanVien();
+                nv.setMaNhanVien(String.valueOf(cursor.getColumnIndexOrThrow(COT_MA_NHANVIEN)));
+                nv.setTenNhanVien(String.valueOf(cursor.getColumnIndexOrThrow(COT_TEN_NHANVIEN)));
+                nv.setDiaChi(String.valueOf(cursor.getColumnIndexOrThrow(COT_DIA_CHI)));
+                nv.setChucVu(cursor.getInt(cursor.getColumnIndexOrThrow(COT_CHUC_VU)));
+                nv.setLuong(cursor.getDouble(cursor.getColumnIndexOrThrow(COT_LUONG)));
+                nv.setMatKhau(String.valueOf(cursor.getColumnIndexOrThrow(COT_MAT_KHAU)));
+                danhSachNhanViens.add(nv);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return danhSachNhanViens;
+    }
+    public NhanVien layNhanVienBangMaNV(String maNhanVien){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM "+ BANG_NHANVIEN +" WHERE "+ COT_MA_NHANVIEN +" = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{maNhanVien});
+        NhanVien nv = new NhanVien();
+        if (cursor.moveToFirst()){
+            nv.setMaNhanVien(String.valueOf(cursor.getColumnIndexOrThrow(COT_MA_NHANVIEN)));
+            nv.setTenNhanVien(String.valueOf(cursor.getColumnIndexOrThrow(COT_TEN_NHANVIEN)));
+            nv.setDiaChi(String.valueOf(cursor.getColumnIndexOrThrow(COT_DIA_CHI)));
+            nv.setChucVu(cursor.getInt(cursor.getColumnIndexOrThrow(COT_CHUC_VU)));
+            nv.setLuong(cursor.getDouble(cursor.getColumnIndexOrThrow(COT_LUONG)));
+            nv.setMatKhau(String.valueOf(cursor.getColumnIndexOrThrow(COT_MAT_KHAU)));
+        }
+        cursor.close();
+        db.close();
+        return nv;
+    }
+    public double layDonGiaSanPham(String maSanPham){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT giaSanPham FROM SanPham WHERE maSanPham = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{maSanPham});
+        double donGia = 0;
+        if (cursor.moveToFirst()){
+            donGia = cursor.getDouble(0);
+        }
+        cursor.close();
+        db.close();
+        return donGia;
+    }
+    public void capNhatTongTienHoaDon(String maHoaDon, double tongTien){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE HoaDon SET tongTien = ? WHERE maHoaDon = ?";
+        db.execSQL(sql, new Object[]{tongTien, maHoaDon});
+        db.close();
+    }
+    public String taoMaDanhMucMoi(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String maDanhMucMoi = "DM1";
+        String sql = "SELECT "+COT_MA_DANHMUC+" FROM " + BANG_DANHMUC + " ORDER BY " + COT_MA_DANHMUC + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            String lastMaDanhMuc = cursor.getString(0);
+            int lastNumber = Integer.parseInt(lastMaDanhMuc.replace("DM",""));
+            maDanhMucMoi = "DM" + (lastNumber + 1);
+        }
+        cursor.close();
+        db.close();
+        return maDanhMucMoi;
+    }
+    public String taoMaSanPhamMoi(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String maSanPhamMoi = "SP1";
+        String sql = "SELECT "+COT_MA_SP+" FROM " + BANG_SANPHAM + " ORDER BY " + COT_MA_SP + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            String lastMaSanPham = cursor.getString(0);
+            int lastNumber = Integer.parseInt(lastMaSanPham.replace("SP",""));
+            maSanPhamMoi = "SP" + (lastNumber + 1);
+        }
+        cursor.close();
+        db.close();
+        return maSanPhamMoi;
+    }
+    public String taoMaNhanVienMoi(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String maNhanVienMoi = "NV1";
+        String sql = "SELECT "+COT_MA_NHANVIEN+" FROM " + BANG_NHANVIEN + " ORDER BY " + COT_MA_NHANVIEN + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            String lastMaNhanVien = cursor.getString(0);
+            int lastNumber = Integer.parseInt(lastMaNhanVien.replace("NV",""));
+            maNhanVienMoi = "NV" + (lastNumber + 1);
+        }
+        cursor.close();
+        db.close();
+        return maNhanVienMoi;
+    }
+    public String taoMaKhachHangMoi(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String maKhachHangMoi = "KH1";
+        String sql = "SELECT "+COT_MA_KHACHHANG+" FROM " + BANG_KHACHHANG + " ORDER BY " + COT_MA_KHACHHANG + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            String lastMaKhachHang = cursor.getString(0);
+            int lastNumber = Integer.parseInt(lastMaKhachHang.replace("KH",""));
+            maKhachHangMoi = "KH" + (lastNumber + 1);
+        }
+        cursor.close();
+        db.close();
+        return maKhachHangMoi;
+    }
+
+    public boolean suaNhanVien(NhanVien nv){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COT_TEN_NHANVIEN, nv.getTenNhanVien());
+        values.put(COT_DIA_CHI, nv.getDiaChi());
+        values.put(COT_CHUC_VU, nv.getChucVu());
+        values.put(COT_LUONG, nv.getLuong());
+        values.put(COT_MAT_KHAU, nv.getMatKhau());
+        int ketqua = db.update(BANG_NHANVIEN, values, COT_MA_NHANVIEN + " = ?", new String[]{nv.getMaNhanVien()});
+        db.close();
+        return ketqua > 0;
+    }
+    public boolean themNhanVien (NhanVien nv){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COT_MA_NHANVIEN, nv.getMaNhanVien());
+        values.put(COT_TEN_NHANVIEN, nv.getTenNhanVien());
+        values.put(COT_DIA_CHI, nv.getDiaChi());
+        values.put(COT_CHUC_VU, nv.getChucVu());
+        values.put(COT_LUONG, nv.getLuong());
+        values.put(COT_MAT_KHAU, nv.getMatKhau());
+        long ketqua = db.insert(BANG_NHANVIEN, null, values);
+        db.close();
+        return ketqua > 0;
+    }
+    public boolean xoaNhanVien(String maNhanVien){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DELETE FROM NhanVien WHERE maNhanVien = ?";
+        db.execSQL(sql, new Object[]{maNhanVien});
+        db.close();
+        return true;
+    }
+    public boolean xoaHDCT(String maHDCT){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DELETE FROM HoaDonChiTiet WHERE maHDCT = ?";
+        db.execSQL(sql, new Object[]{maHDCT});
+        db.close();
+        return true;
+    }
+    public boolean suaHDCT(String maHDCT,String maHoaDon, String maSanPham, int soLuong, double donGia){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE HoaDonChiTiet SET maHoaDon = ?, maSanPham = ?, soLuong = ?, donGia = ? WHERE maHDCT = ?";
+        db.execSQL(sql, new Object[]{maHoaDon, maSanPham, soLuong, donGia, maHDCT});
+        db.close();
+        return true;
+    }
+    public boolean kiemTraMatKhauCu(String maNhanVien, String matKhauCu){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT matKhau FROM NhanVien WHERE maNhanVien = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{maNhanVien, matKhauCu});
+        if (cursor.moveToFirst()){
+            String matKhauHienTai = cursor.getString(0);
+            cursor.close();
+            db.close();
+            return matKhauHienTai.equals(matKhauCu);
+        }
+        cursor.close();
+        db.close();
+        return false;
+    }
+    public boolean capNhatMatKhauMoi(String maNhanVien, String matKhauMoi){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("matKhau", matKhauMoi);
+        int ketqua = db.update("NhanVien", values, "maNhanVien" + " = ?", new String[]{maNhanVien});
+        db.close();
+        return ketqua > 0;
+    }
+    public List<SanPham> layDanhSachSanPham() {
+        List<SanPham> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM SanPham";
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            String maSanPham = cursor.getString(cursor.getColumnIndexOrThrow("maSanPham"));
+            String tenSanPham = cursor.getString(cursor.getColumnIndexOrThrow("tenSanPham"));
+            int giaSanPham = cursor.getInt(cursor.getColumnIndexOrThrow("giaSanPham"));
+            int soLuong = cursor.getInt(cursor.getColumnIndexOrThrow("soLuong"));
+            String donViTinh = cursor.getString(cursor.getColumnIndexOrThrow("donViTinh"));
+            String ngayNhap = cursor.getString(cursor.getColumnIndexOrThrow("ngayNhap"));
+            String maDanhMuc = cursor.getString(cursor.getColumnIndexOrThrow("maDanhMuc"));
+            SanPham sanPham = new SanPham(maSanPham, tenSanPham, giaSanPham, soLuong, donViTinh, ngayNhap, maDanhMuc);
+            list.add(sanPham);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+
     public List<TopSanPham> thongKeTopSanPham(int e){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT sp.maSanPham, sp.tenSanPham, SUM(hdct.soLuong) AS tongSoLuong " + "FROM HoaDonChiTiet hdct " +
@@ -257,4 +505,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return list;
     }
+
 }

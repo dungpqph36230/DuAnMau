@@ -24,7 +24,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tvMaDanhMuc"
+            android:id="@+id/tvTenSanPham"
             android:text="Tên Sản Phẩm"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/tvTenDanhMuc"
+            android:id="@+id/tvGiaSanPham"
             android:text="Giá: 0 VNĐ"
             android:textSize="16dp"
             android:textStyle="bold"
