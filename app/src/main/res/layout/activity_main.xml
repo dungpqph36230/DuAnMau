@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@drawable/ic_launcher_background"
+            android:background="@drawable/banner"
             android:layout_marginTop="8dp"/>
 
         <LinearLayout
@@ -103,7 +103,7 @@
                         android:layout_height="100dp"
                         android:id="@+id/img_topSP"
                         android:paddingLeft="15dp"
-                        android:src="@drawable/ic_launcher_background"/>
+                        android:src="@drawable/top_product"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                         android:layout_height="100dp"
                         android:id="@+id/img_topKH"
                         android:paddingLeft="15dp"
-                        android:src="@drawable/ic_launcher_background"/>
+                        android:src="@drawable/reputation"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

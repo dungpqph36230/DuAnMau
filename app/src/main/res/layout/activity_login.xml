@@ -12,14 +12,14 @@
         android:id="@+id/img_logo"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:src="@drawable/ic_launcher_foreground"/>
+        android:src="@drawable/banner"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tài khoản">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtUsername"
+            android:id="@+id/edt_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>
@@ -31,7 +31,7 @@
         android:hint="Mật khẩu"
         app:passwordToggleEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtPasswrod"
+            android:id="@+id/edt_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
