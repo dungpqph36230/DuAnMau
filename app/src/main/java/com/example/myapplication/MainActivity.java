@@ -11,9 +11,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.myapplication.ui.DoiMatKhauActivity;
 import com.example.myapplication.ui.LoginActivity;
+import com.example.myapplication.ui.QuanLyDanhMucActivity;
+import com.example.myapplication.ui.QuanLyHoaDonActivity;
+import com.example.myapplication.ui.QuanLyKhachHangActivity;
 import com.example.myapplication.ui.QuanLyNhanVienActivity;
 import com.example.myapplication.ui.QuanLySanPhamActivity;
 import com.example.myapplication.ui.ThongKeDoanhThuActivity;
+import com.example.myapplication.ui.ThongKeKhachHangActivity;
 import com.example.myapplication.ui.ThongKeSanPhamActivity;
 
 import java.util.Objects;
@@ -69,28 +73,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //       }
 //       return true;
 //   }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_doanh_thu) {
-            startActivity(new Intent(MainActivity.this, ThongKeDoanhThuActivity.class));
-            return true;
-        }else if (id == R.id.menu_top_san_pham) {
-            startActivity(new Intent(MainActivity.this, ThongKeSanPhamActivity.class));
-            return true;
-        }else if (id == R.id.menu_top_khach_hang) {
-            startActivity(new Intent(MainActivity.this, ThongKeSanPhamActivity.class));
-            return true;
-        }else if (id == R.id.menu_doi_mat_khau) {
-            startActivity(new Intent(MainActivity.this, DoiMatKhauActivity.class));
-            return true;
-        }else if (id == R.id.menu_dang_xuat) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.menu_doanh_thu) {
+//            startActivity(new Intent(MainActivity.this, ThongKeDoanhThuActivity.class));
+//            return true;
+//        }else if (id == R.id.menu_top_san_pham) {
+//            startActivity(new Intent(MainActivity.this, ThongKeSanPhamActivity.class));
+//            return true;
+//        }else if (id == R.id.menu_top_khach_hang) {
+//            startActivity(new Intent(MainActivity.this, ThongKeSanPhamActivity.class));
+//            return true;
+//        }else if (id == R.id.menu_doi_mat_khau) {
+//            startActivity(new Intent(MainActivity.this, DoiMatKhauActivity.class));
+//            return true;
+//        }else if (id == R.id.menu_dang_xuat) {
+//            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//            finish();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onClick(View v) {
