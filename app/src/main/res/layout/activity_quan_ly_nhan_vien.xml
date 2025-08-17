@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
-    xmlns:tools="http://schemas.android.com/tools">
-
+    android:padding="16dp"
+    tools:context=".ui.QuanLyNhanVienActivity">
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
         android:background="?attr/colorPrimary"
-        app:title="Quản lý nhân viên"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="?attr/homeAsUpIndicator"/>
+        app:title="Quản lý nhân viên"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,20 +34,18 @@
             android:id="@+id/lvNhanVien"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/fabThemNhanVien"
-            android:divider="@color/black"
-            android:dividerHeight="1dp"/>
+            android:layout_above="@id/fabThemNhanVien"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabThemNhanVien"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fabThemNhanVien"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_input_add"
-            android:contentDescription="Thêm Nhân viên"/>
-
+            android:src="@android:drawable/ic_input_add"
+            android:contentDescription="Thêm danh mục" />
     </RelativeLayout>
-
 </LinearLayout>

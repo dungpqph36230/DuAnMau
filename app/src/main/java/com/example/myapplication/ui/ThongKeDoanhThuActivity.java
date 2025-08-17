@@ -14,9 +14,9 @@ import com.example.myapplication.R;
 import java.util.Calendar;
 
 public class ThongKeDoanhThuActivity extends AppCompatActivity {
-    private EditText edtTuNgayBatDau, edtDenNgayKetThuc;
-    private DatabaseHelper db;
+    private EditText edtNgayBatDau, edtNgayKetThuc;
     private TextView tvDoanhThu;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +27,24 @@ public class ThongKeDoanhThuActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Thống kê doanh thu");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        db = new DatabaseHelper(this);
+        databaseHelper = new DatabaseHelper(this);
 
-        edtTuNgayBatDau = findViewById(R.id.edtNgayBatDau);
-        edtDenNgayKetThuc = findViewById(R.id.edtNgayKetThuc);
-        tvDoanhThu = findViewById(R.id.tvDoanhThus);
-        edtTuNgayBatDau.setOnClickListener(v -> showDataPickerDialog(edtTuNgayBatDau));
-        edtDenNgayKetThuc.setOnClickListener(v -> showDataPickerDialog(edtDenNgayKetThuc));
-        findViewById(R.id.btnThongKeDT).setOnClickListener(v -> {
-            String tuNgay = edtTuNgayBatDau.getText().toString();
-            String denNgay = edtDenNgayKetThuc.getText().toString();
-            if (tuNgay.isEmpty() || denNgay.isEmpty()){
-                tvDoanhThu.setText("Vui lòng nhập đủ ngày bắt đầu và ngày kết thúc");
+        edtNgayBatDau = findViewById(R.id.edtNgayBatDau);
+        edtNgayKetThuc = findViewById(R.id.edtNgayKetThuc);
+        tvDoanhThu = findViewById(R.id.tvDoanhThu);
+
+        edtNgayBatDau.setOnClickListener(v -> showDatePickerDialog(edtNgayBatDau));
+        edtNgayKetThuc.setOnClickListener(v -> showDatePickerDialog(edtNgayKetThuc));
+        findViewById(R.id.btnThongKeDoanhThu).setOnClickListener(v -> {
+            String ngayBatDau = edtNgayBatDau.getText().toString().trim();
+            String ngayKetThuc = edtNgayKetThuc.getText().toString().trim();
+            if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+                tvDoanhThu.setText("Vui lòng nhập đầy đủ ngày bắt đầu và ngày kết thúc.");
                 return;
             }
-            int doanhThu = db.layDoanhThu(tuNgay, denNgay);
-            tvDoanhThu.setText("Doanh Thu: " + doanhThu + " VNĐ");
+
+            int doanhThu = databaseHelper.layDoanhThu(ngayBatDau, ngayKetThuc);
+            tvDoanhThu.setText("Doanh thu: " + doanhThu + " VND");
         });
     }
 
@@ -52,7 +54,7 @@ public class ThongKeDoanhThuActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showDataPickerDialog(EditText editText) {
+    private void showDatePickerDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -64,8 +66,7 @@ public class ThongKeDoanhThuActivity extends AppCompatActivity {
 //                    String selectedDate = selectedYear
 //                            + "-" + String.format("%02d", selectedMonth + 1)
 //                            + "-" + String.format("%02d", selectedDay);
-//                    editText.setText(selectedDate);
-                    String selectedDate = String.format("%02d-%02d-%04d", selectedYear, selectedMonth + 1, selectedDay);
+                    String selectedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth, selectedYear);
                     editText.setText(selectedDate);
                 },
                 year, month, day

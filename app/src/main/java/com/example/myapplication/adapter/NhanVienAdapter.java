@@ -16,10 +16,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class NhanVienAdapter extends BaseAdapter {
-
     private final Context context;
-    private final List<NhanVien> danhSachNhanViens;
-    private  OnNhanVienClickListener onNhanVienClickListener;
+    private final List<NhanVien> danhSachNhanVien;
+    private OnNhanVienClickListener onNhanVienClickListener;
     NumberFormat currencyFormat;
 
     public interface OnNhanVienClickListener {
@@ -27,9 +26,9 @@ public class NhanVienAdapter extends BaseAdapter {
         void onDeleteNhanVien(NhanVien nhanVien);
     }
 
-    public NhanVienAdapter(Context context, List<NhanVien> danhSachNhanViens) {
+    public NhanVienAdapter(Context context, List<NhanVien> danhSachNhanVien) {
         this.context = context;
-        this.danhSachNhanViens = danhSachNhanViens;
+        this.danhSachNhanVien = danhSachNhanVien;
         currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     }
 
@@ -39,48 +38,49 @@ public class NhanVienAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return danhSachNhanViens.size();
+        return danhSachNhanVien.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return danhSachNhanViens.get(position);
+        return danhSachNhanVien.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_nhan_vien, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.imgProduct = convertView.findViewById(R.id.imgNhanVien);
-            viewHolder.tvMaNhanVien = convertView.findViewById(R.id.edtMaNhanVien);
-            viewHolder.tvTenNhanVien = convertView.findViewById(R.id.tvTenNhanVien);
-            viewHolder.tvDiaChi = convertView.findViewById(R.id.tvDiaChi);
-            viewHolder.tvLuong = convertView.findViewById(R.id.tvLuong);
-            viewHolder.tvChucVu = convertView.findViewById(R.id.tvChucVu);
-            viewHolder.imgSuaNhanVien = convertView.findViewById(R.id.imgSuaDanhMuc);
-            viewHolder.imgXoaNhanVien = convertView.findViewById(R.id.imgXoaDanhMuc);
-            convertView.setTag(viewHolder);
-        }else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            holder = new ViewHolder();
+            holder.tvMaNhanVien = convertView.findViewById(R.id.tvMaNhanVien);
+            holder.tvTenNhanVien = convertView.findViewById(R.id.tvTenNhanVien);
+            holder.tvDiaChi = convertView.findViewById(R.id.tvDiaChi);
+            holder.tvLuong = convertView.findViewById(R.id.tvLuong);
+            holder.tvChucVu = convertView.findViewById(R.id.tvChucVu);
+            holder.imgSuaNhanVien = convertView.findViewById(R.id.imgSuaNhanVien);
+            holder.imgXoaNhanVien = convertView.findViewById(R.id.imgXoaNhanVien);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        NhanVien nhanVien = danhSachNhanViens.get(position);
-        viewHolder.tvMaNhanVien.setText(nhanVien.getMaNhanVien());
-        viewHolder.tvTenNhanVien.setText(nhanVien.getTenNhanVien());
-        viewHolder.tvDiaChi.setText(nhanVien.getDiaChi());
-        viewHolder.tvLuong.setText(currencyFormat.format(nhanVien.getLuong()));
-        viewHolder.tvChucVu.setText(nhanVien.getChucVu()== 0? "Nhân viên": "Quản lý");
-        viewHolder.imgSuaNhanVien.setOnClickListener(v-> onNhanVienClickListener.onEditNhanVien(nhanVien));
-        viewHolder.imgXoaNhanVien.setOnClickListener(v-> onNhanVienClickListener.onDeleteNhanVien(nhanVien));
+
+        NhanVien nhanVien = danhSachNhanVien.get(position);
+        holder.tvMaNhanVien.setText(nhanVien.getMaNhanVien());
+        holder.tvTenNhanVien.setText(nhanVien.getTenNhanVien());
+        holder.tvDiaChi.setText(nhanVien.getDiaChi());
+        holder.tvLuong.setText(currencyFormat.format(nhanVien.getLuong()));
+        holder.tvChucVu.setText(nhanVien.getChucVu() == 0 ? "Nhân viên" : "Quản lý");
+        holder.imgSuaNhanVien.setOnClickListener(v -> onNhanVienClickListener.onEditNhanVien(nhanVien));
+        holder.imgXoaNhanVien.setOnClickListener(v -> onNhanVienClickListener.onDeleteNhanVien(nhanVien));
 
         return convertView;
     }
+
     static class ViewHolder {
         ImageView imgProduct;
         TextView tvMaNhanVien;

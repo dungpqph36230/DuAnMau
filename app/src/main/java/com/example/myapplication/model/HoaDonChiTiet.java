@@ -1,7 +1,7 @@
 package com.example.myapplication.model;
 
 public class HoaDonChiTiet {
-    private String maHDCT;
+    private String maCTHD;
     private String maHoaDon;
     private String maSanPham;
     private int soLuong;
@@ -10,22 +10,24 @@ public class HoaDonChiTiet {
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(String maHDCT, String maHoaDon, String maSanPham, int soLuong, double donGia) {
-        this.maHDCT = maHDCT;
+    public HoaDonChiTiet(String maCTHD, String maHoaDon, String maSanPham, int soLuong, double donGia) {
+        this.maCTHD = maCTHD;
         this.maHoaDon = maHoaDon;
         this.maSanPham = maSanPham;
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
 
-    public String getMaHDCT() {
-        return maHDCT;
+    // getter và setter
+    public String getMaCTHD() {
+        return maCTHD;
     }
 
-    public void setMaHDCT(String maHDCT) {
-        this.maHDCT = maHDCT;
+    public void setMaCTHD(String maCTHD) {
+        this.maCTHD = maCTHD;
     }
 
+    // Getter và Setter cho maHoaDon
     public String getMaHoaDon() {
         return maHoaDon;
     }
@@ -34,6 +36,7 @@ public class HoaDonChiTiet {
         this.maHoaDon = maHoaDon;
     }
 
+    // Getter và Setter cho maSanPham
     public String getMaSanPham() {
         return maSanPham;
     }
@@ -42,6 +45,7 @@ public class HoaDonChiTiet {
         this.maSanPham = maSanPham;
     }
 
+    // Getter và Setter cho soLuong
     public int getSoLuong() {
         return soLuong;
     }
@@ -50,6 +54,7 @@ public class HoaDonChiTiet {
         this.soLuong = soLuong;
     }
 
+    // Getter và Setter cho donGia
     public double getDonGia() {
         return donGia;
     }

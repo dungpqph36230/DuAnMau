@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingTop="10dp"
+    android:background="@color/white">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
         android:background="?attr/colorPrimary"
-        app:title="Đổi Mật Khẩu"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="?attr/homeAsUpIndicator"/>
+        app:title="Đổi mật khẩu "
+        app:navigationIcon="?attr/homeAsUpIndicator" />
 
+    <!-- Ảnh đổi mật khẩu -->
     <ImageView
         android:id="@+id/imgDoiMatKhau"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:src="@drawable/ic_launcher_background"/>
+        android:src="@drawable/ic_password" />
 
+    <!-- Mật khẩu cũ -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,19 +34,20 @@
         android:hint="Mật khẩu cũ"
         app:passwordToggleEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtOldPasswrod"
+            android:id="@+id/edtOldPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Mật khẩu mới -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mật khẩu mới"
         app:passwordToggleEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtNewPasswrod"
+            android:id="@+id/edtNewPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
@@ -55,27 +59,28 @@
         android:hint="Nhập lại mật khẩu mới"
         app:passwordToggleEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtConfirmPasswrod"
+            android:id="@+id/edtConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Nút Lưu và Hủy -->
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/btnLuu"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="Lưu"
             android:backgroundTint="#2196F3"
-            android:textColor="@color/white"/>
+            android:textColor="@android:color/white"/>
 
         <View
             android:layout_width="16dp"
@@ -84,12 +89,11 @@
         <Button
             android:id="@+id/btnHuy"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="Hủy"
             android:backgroundTint="#2196F3"
-            android:textColor="@color/white"/>
-
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
 </LinearLayout>

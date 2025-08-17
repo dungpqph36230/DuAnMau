@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.myapplication.R;
 import com.example.myapplication.common.Common;
 import com.example.myapplication.database.DatabaseHelper;
@@ -14,8 +15,8 @@ import com.example.myapplication.database.DatabaseHelper;
 import java.util.Objects;
 
 public class DoiMatKhauActivity extends AppCompatActivity {
-    private EditText edtOldPassword, edtNewPassword, edtConfirmPassword;
-    private Button btnSave, btnCancel;
+    private EditText edtMatKhauCu, edtMatKhauMoi, edtNhapLaiMatKhauMoi;
+    private Button btnLuu, btnHuy;
     private DatabaseHelper db;
 
     @Override
@@ -23,11 +24,11 @@ public class DoiMatKhauActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doi_mat_khau);
 
-        edtOldPassword = findViewById(R.id.edtOldPasswrod);
-        edtNewPassword = findViewById(R.id.edtNewPasswrod);
-        edtConfirmPassword = findViewById(R.id.edtConfirmPasswrod);
-        btnSave = findViewById(R.id.btnLuu);
-        btnCancel = findViewById(R.id.btnHuy);
+        edtMatKhauCu = findViewById(R.id.edtOldPassword);
+        edtMatKhauMoi = findViewById(R.id.edtNewPassword);
+        edtNhapLaiMatKhauMoi = findViewById(R.id.edtConfirmPassword);
+        btnLuu = findViewById(R.id.btnLuu);
+        btnHuy = findViewById(R.id.btnHuy);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,40 +36,50 @@ public class DoiMatKhauActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new DatabaseHelper(this);
-        btnSave.setOnClickListener(v -> doiMatKhau());
-        btnCancel.setOnClickListener(v->{
-            edtOldPassword.setText("");
-            edtNewPassword.setText("");
-            edtConfirmPassword.setText("");
+
+        // Lấy mã nhân viên từ Intent để biết nhân viên nào đang đăng nhập
+
+        btnLuu.setOnClickListener(v -> doiMatKhau());
+        btnHuy.setOnClickListener(v -> {
+            edtMatKhauCu.setText("");
+            edtMatKhauMoi.setText("");
+            edtNhapLaiMatKhauMoi.setText("");
         });
     }
 
-    private void setSupportActionBar(Toolbar toolbar) {
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     private void doiMatKhau() {
-        String matKhauCu = edtOldPassword.getText().toString().trim();
-        String matKhauMoi = edtNewPassword.getText().toString().trim();
-        String xacNhanMatKhau = edtConfirmPassword.getText().toString().trim();
+        String matKhauCu = edtMatKhauCu.getText().toString().trim();
+        String matKhauMoi = edtMatKhauMoi.getText().toString().trim();
+        String nhapLaiMatKhauMoi = edtNhapLaiMatKhauMoi.getText().toString().trim();
 
-        if (matKhauCu.isEmpty()|| matKhauMoi.isEmpty() || xacNhanMatKhau.isEmpty()){
+        // Kiểm tra không được bỏ trống
+        if (matKhauCu.isEmpty() || matKhauMoi.isEmpty() || nhapLaiMatKhauMoi.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!matKhauMoi.equals(xacNhanMatKhau)){
-            Toast.makeText(this, "Mật khẩu mới và xác nhận mật khẩu không khớp", Toast.LENGTH_SHORT).show();
+        // Kiểm tra mật khẩu cũ có đúng không
+        if (!db.kiemTraMatKhauCu(Common.maNhanVien, matKhauCu)) {
+            Toast.makeText(this, "Mật khẩu cũ không chính xác!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!db.kiemTraMatKhauCu(Common.maNhanVien, matKhauCu)){
-            Toast.makeText(this, "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+        // Kiểm tra mật khẩu mới và xác nhận phải giống nhau
+        if (!matKhauMoi.equals(nhapLaiMatKhauMoi)) {
+            Toast.makeText(this, "Mật khẩu mới không khớp!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (db.capNhatMatKhauMoi(Common.maNhanVien, matKhauMoi)){
-            Toast.makeText(this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-            finish();
-        }else {
-            Toast.makeText(this, "Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
+
+        // Nếu đúng, tiến hành cập nhật mật khẩu mới vào SQLite
+        if (db.capNhatMatKhauMoi(Common.maNhanVien, matKhauMoi)) {
+            Toast.makeText(this, "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show();
+            finish(); // Đóng activity sau khi đổi mật khẩu
+        } else {
+            Toast.makeText(this, "Đổi mật khẩu thất bại, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
         }
     }
 }

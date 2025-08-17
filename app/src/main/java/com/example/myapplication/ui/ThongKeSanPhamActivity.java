@@ -1,5 +1,8 @@
 package com.example.myapplication.ui;
 
+import static android.view.View.GONE;
+
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,12 +18,13 @@ import com.example.myapplication.adapter.TopSanPhamAdapter;
 import com.example.myapplication.database.DatabaseHelper;
 import com.example.myapplication.model.TopSanPham;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
 public class ThongKeSanPhamActivity extends AppCompatActivity {
-    private DatabaseHelper db;
-    private ListView lstViewSanPham;
+    private DatabaseHelper dbHelper;
+    private ListView listViewSanPham;
     private EditText edtNgayBatDau, edtNgayKetThuc, edtSoLuong;
     private TextView tvTopSanPham;
 
@@ -28,46 +32,71 @@ public class ThongKeSanPhamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke_san_pham);
-        db = new DatabaseHelper(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Thống kê sản phẩm");
+        getSupportActionBar().setTitle("Thống kê sản phẩm");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        dbHelper = new DatabaseHelper(this);
 
-        lstViewSanPham = findViewById(R.id.lvSanPham);
+        listViewSanPham = findViewById(R.id.lvSanPham);
         edtNgayBatDau = findViewById(R.id.edtNgayBatDau);
         edtNgayKetThuc = findViewById(R.id.edtNgayKetThuc);
         edtSoLuong = findViewById(R.id.edtSoLuong);
         tvTopSanPham = findViewById(R.id.tvTopSanPham);
-        edtNgayBatDau.setOnClickListener(v -> {showDatePickerDialog(edtNgayBatDau);});
-        edtNgayKetThuc.setOnClickListener(v -> {showDatePickerDialog(edtNgayKetThuc);});
 
-        findViewById(R.id.btnThongKeDT).setOnClickListener(v -> {
+        edtNgayBatDau.setOnClickListener(v -> showDatePickerDialog(edtNgayBatDau));
+        edtNgayKetThuc.setOnClickListener(v -> showDatePickerDialog(edtNgayKetThuc));
+        findViewById(R.id.btnTopSanPham).setOnClickListener(v -> {
             if (edtNgayBatDau.getText().toString().isEmpty()
                     || edtNgayKetThuc.getText().toString().isEmpty()
                     || edtSoLuong.getText().toString().isEmpty()) {
-                tvTopSanPham.setText("Vui lòng nhập đầy đủ thông tin");
+                tvTopSanPham.setText("Vui lòng nhập đầy đủ thông tin.");
                 tvTopSanPham.setVisibility(View.VISIBLE);
-                lstViewSanPham.setVisibility(View.GONE);
+                listViewSanPham.setVisibility(GONE);
                 return;
             } else {
-                tvTopSanPham.setVisibility(View.GONE);
-                lstViewSanPham.setVisibility(View.VISIBLE);
+                listViewSanPham.setVisibility(View.VISIBLE);
+                tvTopSanPham.setVisibility(GONE);
             }
-            hienThiTopSanPham(Integer.parseInt(edtSoLuong.getText().toString()));
+            hienThiTopSanPham(Integer.parseInt(edtSoLuong.getText().toString().trim()));
         });
     }
 
-    private void hienThiTopSanPham(int i) {
-        List<TopSanPham> topSanPhamList = db.thongKeTopSanPham(i);
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    private void hienThiTopSanPham(int n) {
+        List<TopSanPham> topSanPhamList = dbHelper.thongKeTopSanPham(n);
+
         if (topSanPhamList != null && !topSanPhamList.isEmpty()) {
             TopSanPhamAdapter adapter = new TopSanPhamAdapter(this, topSanPhamList);
-            lstViewSanPham.setAdapter(adapter);
-        }else {
-            Toast.makeText(this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
+            listViewSanPham.setAdapter(adapter);
+        } else {
+            Toast.makeText(this, "Không có dữ liệu sản phẩm!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void showDatePickerDialog(EditText edtNgayBatDau) {
+
+    private void showDatePickerDialog(EditText  editText) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String selectedDate = selectedYear
+                            + "-" + String.format("%02d", selectedMonth + 1)
+                            + "-" + String.format("%02d", selectedDay);
+                    editText.setText(selectedDate);
+                },
+                year, month, day
+        );
+        datePickerDialog.show();
     }
 }

@@ -6,7 +6,8 @@ public class HoaDon {
     private String maKhachHang;
     private String ngayLap;
     private double tongTien;
-
+    public HoaDon() {
+    }
     public HoaDon(String maHoaDon, String maNhanVien, String maKhachHang, String ngayLap, double tongTien) {
         this.maHoaDon = maHoaDon;
         this.maNhanVien = maNhanVien;
@@ -15,6 +16,7 @@ public class HoaDon {
         this.tongTien = tongTien;
     }
 
+    // getter và setter
     public String getMaHoaDon() {
         return maHoaDon;
     }
@@ -23,6 +25,7 @@ public class HoaDon {
         this.maHoaDon = maHoaDon;
     }
 
+    // Getter và Setter cho maNhanVien
     public String getMaNhanVien() {
         return maNhanVien;
     }
@@ -31,6 +34,7 @@ public class HoaDon {
         this.maNhanVien = maNhanVien;
     }
 
+    // Getter và Setter cho maKhachHang
     public String getMaKhachHang() {
         return maKhachHang;
     }
@@ -39,6 +43,7 @@ public class HoaDon {
         this.maKhachHang = maKhachHang;
     }
 
+    // Getter và Setter cho ngayLap
     public String getNgayLap() {
         return ngayLap;
     }
@@ -47,6 +52,7 @@ public class HoaDon {
         this.ngayLap = ngayLap;
     }
 
+    // Getter và Setter cho tongTien
     public double getTongTien() {
         return tongTien;
     }

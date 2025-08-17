@@ -4,18 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@color/white">
+    android:padding="10dp">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:title="Thống kê sản phẩm"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="?attr/homeAsUpIndicator"/>
-
+        app:title="Thống kê top sản phẩm"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,13 +22,13 @@
             android:id="@+id/tvTuNgay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Từ ngày: "
-            android:textStyle="bold"
+            android:text="Từ ngày"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_alignTop="@+id/edtNgayBatDau"
             android:layout_alignBottom="@+id/edtNgayBatDau"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@android:color/black"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="8dp"/>
 
@@ -40,43 +39,45 @@
             android:hint="Nhập ngày bắt đầu (YYYY-MM-DD)"
             android:inputType="date"
             android:padding="10dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:background="@android:drawable/editbox_background"/>
 
         <TextView
             android:id="@+id/tvDenNgay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đến ngày: "
-            android:textStyle="bold"
+            android:text= "Đến ngày"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_alignTop="@+id/edtNgayKetThuc"
             android:layout_alignBottom="@+id/edtNgayKetThuc"
+            android:textColor="@android:color/black"
             android:gravity="center"
-            android:textColor="@color/black"
             android:layout_marginEnd="8dp"/>
 
         <EditText
             android:id="@+id/edtNgayKetThuc"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:hint="Nhập ngày bắt đầu (YYYY-MM-DD)"
+            android:hint="Nhập ngày kết thúc (YYYY-MM-DD)"
             android:inputType="date"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/edtNgayBatDau"
             android:padding="10dp"
             android:layout_marginTop="10dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/edtNgayBatDau"/>
+            android:background="@android:drawable/editbox_background"/>
 
         <TextView
             android:id="@+id/tvSoLuong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Số Lượng: "
-            android:textStyle="bold"
+            android:text= "Số lượng"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_alignTop="@+id/edtSoLuong"
             android:layout_alignBottom="@+id/edtSoLuong"
+            android:textColor="@android:color/black"
             android:gravity="center"
-            android:textColor="@color/black"
             android:layout_marginEnd="8dp"/>
 
         <EditText
@@ -84,37 +85,34 @@
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:hint="Nhập số lượng cần thống kê"
-            android:inputType="number"
+            android:inputType="date"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/edtNgayKetThuc"
             android:padding="10dp"
             android:layout_marginTop="10dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/edtNgayKetThuc"/>
+            android:background="@android:drawable/editbox_background"/>
     </RelativeLayout>
 
     <Button
-        android:id="@+id/btnThongKeDT"
+        android:id="@+id/btnTopSanPham"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Thống kê top sản phẩm"
+        android:textSize="16sp"
         android:layout_marginTop="16dp"
-        android:text="Thống kê sản phẩm"
-        android:textSize="18sp"
-        android:backgroundTint="#2196F3"
-        android:textColor="@color/white"/>
+        android:backgroundTint="@android:color/holo_blue_light"/>
 
     <TextView
         android:id="@+id/tvTopSanPham"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#F40B0B"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"/>
 
     <ListView
         android:id="@+id/lvSanPham"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="#858383"
-        android:dividerHeight="1dp"/>
-
+        android:layout_height="match_parent"/>
 </LinearLayout>

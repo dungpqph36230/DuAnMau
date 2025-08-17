@@ -3,81 +3,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="30dp">
 
     <LinearLayout
         android:id="@+id/layoutMaDanhMuc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="60dp"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Mã danh mục:"/>
+            android:text="Mã Danh Mục:" />
 
         <EditText
             android:id="@+id/edtMaDanhMuc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Nhập mã danh mục"
-            android:inputType="number"/>
+            android:layout_weight="1" />
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/layoutTenDanhMuc"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Tên Nhân Viên:"/>
+            android:text="Tên Danh Mục" />
 
         <EditText
-            android:id="@+id/edtTenDanhMuc"
+            android:id="@+id/edtTenSanPham"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Nhập tên danh mục"
-            android:inputType="text"/>
-
+            android:hint="Nhập tên danh mục" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
+    <!-- Nút Lưu -->
+    <Button
+        android:id="@+id/btnLuu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="Lưu"
+        android:layout_marginTop="16dp" />
 
-        <Button
-            android:id="@+id/btnLuu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lưu"
-            android:backgroundTint="#2196F3"
-            android:textColor="@color/white"/>
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="match_parent"/>
-
-        <Button
-            android:id="@+id/btnHuy"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Hủy"
-            android:backgroundTint="#2196F3"
-            android:textColor="@color/white"/>
-
-    </LinearLayout>
+    <!-- Nút Hủy -->
+    <Button
+        android:id="@+id/btnHuy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hủy"
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

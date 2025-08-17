@@ -24,18 +24,18 @@ public class SanPhamAdapter extends BaseAdapter {
     NumberFormat currencyFormat;
 
     public interface OnSanPhamClickListener {
+        void onAddToCartSanPham(SanPham sanPham, View iconGioHangItem);
         void onEditSanPham(SanPham sanPham);
         void onDeleteSanPham(SanPham sanPham);
     }
 
+    public SanPhamAdapter(Context context, List<SanPham> sanPhamList) {
+        this.context = context;
+        this.danhSachSanPham = sanPhamList;
+        currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    }
     public void setOnSanPhamClickListener(OnSanPhamClickListener onSanPhamClickListener) {
         this.onSanPhamClickListener = onSanPhamClickListener;
-    }
-
-    public SanPhamAdapter(Context context, List<SanPham> danhSachSanPham) {
-        this.context = context;
-        this.danhSachSanPham = danhSachSanPham;
-        currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     }
 
     @Override
@@ -50,42 +50,43 @@ public class SanPhamAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder hoder;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_san_pham, parent, false);
-            hoder = new ViewHolder();
-            hoder.imgProduct = convertView.findViewById(R.id.imgSanPham);
-            hoder.tvTenSanPham = convertView.findViewById(R.id.tvTenSanPham);
-            hoder.tvGiaSanPham = convertView.findViewById(R.id.tvGiaSanPham);
-            hoder.tvSoLuong = convertView.findViewById(R.id.tvSoLuong);
-            hoder.imgSuaSanPham = convertView.findViewById(R.id.imgSuaDanhMuc);
-            hoder.imgXoaSanPham = convertView.findViewById(R.id.imgXoaDanhMuc);
-            convertView.setTag(hoder);
+            holder = new ViewHolder();
+            holder.tvTenSanPham = convertView.findViewById(R.id.tvTenSanPham);
+            holder.tvGiaSanPham = convertView.findViewById(R.id.tvGiaSanPham);
+            holder.tvSoLuongTonKho = convertView.findViewById(R.id.tvSoLuongTonKho);
+            holder.imgGioHang = convertView.findViewById(R.id.imgGioHang);
+            holder.imgSuaSanPham = convertView.findViewById(R.id.imgSuaDanhMuc);
+            holder.imgXoaSanPham = convertView.findViewById(R.id.imgXoaDanhMuc);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        else {
-            hoder = (ViewHolder) convertView.getTag();
-        }
-        SanPham sanPham = danhSachSanPham.get(position);
-        hoder.tvTenSanPham.setText(sanPham.getTenSanPham());
-        hoder.tvGiaSanPham.setText(currencyFormat.format(sanPham.getGiaSanPham()));
-        hoder.tvSoLuong.setText("Tồn kho: " + sanPham.getSoLuong());
-        hoder.imgSuaSanPham.setOnClickListener(v -> onSanPhamClickListener.onEditSanPham(sanPham));
-        hoder.imgXoaSanPham.setOnClickListener(v -> onSanPhamClickListener.onDeleteSanPham(sanPham));
+
+        SanPham sp = danhSachSanPham.get(position);
+        holder.tvTenSanPham.setText(sp.getTenSanPham());
+        holder.tvGiaSanPham.setText(currencyFormat.format(sp.getGiaSanPham()));
+        holder.tvSoLuongTonKho.setText("Tồn kho: " + sp.getSoLuong());
+        holder.imgGioHang.setOnClickListener(v -> onSanPhamClickListener.onAddToCartSanPham(sp, holder.imgGioHang));
+        holder.imgSuaSanPham.setOnClickListener(v -> onSanPhamClickListener.onEditSanPham(sp));
+        holder.imgXoaSanPham.setOnClickListener(v -> onSanPhamClickListener.onDeleteSanPham(sp));
+
         return convertView;
     }
 
     static class ViewHolder {
         ImageView imgProduct;
-        TextView tvMaSanPham;
         TextView tvTenSanPham;
         TextView tvGiaSanPham;
-        TextView tvSoLuong;
+        TextView tvSoLuongTonKho;
+        ImageView imgGioHang;
         ImageView imgSuaSanPham;
         ImageView imgXoaSanPham;
     }
